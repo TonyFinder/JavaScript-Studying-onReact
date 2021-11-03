@@ -1,4 +1,4 @@
-import {ActionType, dev, multi, reducerForNumbers, sub, sum} from './tasks';
+import {dev, multi, reducerForNumbers, sub, sum} from './lesson_7';
 
 // Full test
 test('Sum of 2 numbers', () => {
