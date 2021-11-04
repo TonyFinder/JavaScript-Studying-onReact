@@ -12,8 +12,8 @@ import {
 test('get sum', () => {
     expect(sum(3, 5, 7, 6, 4, 9)).toBe(34)
     expect(sum(1, 1, 1, 6)).toBe(9)
+    expect(sum(0)).toBe(0)
 })
-
 test('get Triangle Type', () => {
     expect(getTriangleType(1, 1, 1)).toBe('10')
     expect(getTriangleType(2, 3, 3)).toBe('01')
@@ -21,7 +21,6 @@ test('get Triangle Type', () => {
     expect(getTriangleType(4, 5, 3)).toBe('11')
     expect(getTriangleType(10, 2, 2)).toBe('00')
 })
-
 test('get Sum ', () => {
     expect(getSum(1000)).toBe(1)
     expect(getSum(0)).toBe(0)
@@ -60,5 +59,8 @@ test('get banknote list', () => {
     expect(result23[0]).toBe(20)
     expect(result23[1]).toBe(2)
     expect(result23[2]).toBe(1)
-
+    expect(result2500.length).toBe(3)
+    expect(result2500.reduce((acc, el) => acc + el, 0)).toBe(2500)
+    expect(result23.length).toBe(3)
+    expect(result23.reduce((acc, el) => acc + el, 0)).toBe(23)
 })

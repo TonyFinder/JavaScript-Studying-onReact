@@ -1,10 +1,8 @@
 // 1. Функция sum принимает параметром целые положительные
 // числа (неопределённое кол-во) и возвращает их сумму (rest).
 
-export function sum( ...nums: Array<any>): number {
-    //...здесь пишем код.
-    // В return стоит "заглушка", чтоб typescript не ругался
-    return 123
+export function sum(...nums: Array<any>): number {
+    return nums.reduce((acc, el) => acc + el, 0)
 }
 
 
@@ -16,52 +14,92 @@ export function sum( ...nums: Array<any>): number {
 //  - "11", если треугольник обычный,
 //  - "00", если такого треугольника не существует.
 
-export function getTriangleType(a: number,b: number,c: number): string {
-    //...здесь пишем код.
-    // В return стоит "заглушка", чтоб typescript не ругался
-    return ""
+export function getTriangleType(a: number, b: number, c: number): string {
+    return a >= b + c || b >= a + c || c >= a + b
+        ? '00'
+        : a === b && a === c
+            ? '10'
+            : a === b || a === c || b === c
+                ? '01'
+                : '11'
 }
 
 
 // 3. Функция getSum принимает параметром целое число и возвращает
 // сумму цифр этого числа
 
-export function getSum(number: number): number{
-    //...здесь пишем код.
-    // В return стоит "заглушка", чтоб typescript не ругался
-    return 123
-}
+// Мой первый вариант
+/*export function getSum(number: number): number {
+    let arr = number.toString().split('')
+    let result = +arr[0]
+    if (arr.length > 1) {
+        for (let i = 0; i < arr.length - 1; i++) {
+            result = result + (+arr[i + 1])
+        }
+    }
+    return result
+}*/
 
+// Мой второй вариант. Задумка из урока, но реализация своя - получилось намного короче.
+export function getSum(number: number): number {
+    return String(number).split('').reduce((acc, el) => +acc + +el, 0)
+}
 
 // 4. Функция принимает isEvenIndexSumGreater параметром массив чисел.
 // Если сумма чисел с чётными ИНДЕКСАМИ!!! (0 как чётный индекс) больше
 // суммы чисел с нечётными ИНДЕКСАМИ!!!, то функция возвращает true.
 // В противном случае - false.
 
+// Мой первый вариант
+/*export const isEvenIndexSumGreater = (arr: Array<number>): boolean => {
+    let even = 0
+    let odd = 0
+    for (let i = 0; i < arr.length; i++) {
+        even = even + (+arr[i])
+        i++
+    }
+    for (let i = 1; i < arr.length; i++) {
+        odd = odd + arr[i]
+        i++
+    }
+
+    return even > odd
+}*/
+
+// Мой второй вариант
 export const isEvenIndexSumGreater = (arr: Array<number>): boolean => {
-    //...здесь пишем код.
-    // В return стоит "заглушка", чтоб typescript не ругался
-    return true
+    return arr.reduce((acc, el, i) => i % 2 === 0 ? acc + el : acc, 0) > arr.reduce((acc, el, i) => i % 2 != 0 ? acc + el : acc, 0)
 }
 
 // 5. Функция getSquarePositiveIntegers принимает параметром массив чисел и возвращает новый массив. 
 // Новый массив состоит из квадратов целых положительных чисел, котрые являются элементами исходгого массива.
 // Исходный массив не мутирует.
 
+//Мой первый вариант
+/*export function getSquarePositiveIntegers(array: Array<number>): Array<number> {
+    let result = []
+    for (let i = 0; i < array.length; i++) {
+        array[i] >= 0 && array[i] % 1 === 0 ? result.push(array[i] * array[i]) : result
+    }
+    return result
+}*/
 
+//Мой второй вариант
 export function getSquarePositiveIntegers(array: Array<number>): Array<number> {
-    //...здесь пишем код.
-    // В return стоит "заглушка", чтоб typescript не ругался
-    return []
+    return array.filter(f => f % 1 === 0 && f > 0).map(m => m * m)
 }
 
 // 6. Функция принимает параметром целое не отрицательное число N и возвращает сумму всех чисел от 0 до N включительно
 // Попробуйте реализовать функцию без использования перебирающих методов.
 
 export function sumFirstNumbers(N: number): number {
-    //...здесь пишем код.
-    // В return стоит "заглушка", чтоб typescript не ругался
-    return 0
+    let result = 0
+    if (N < 2) {
+        return N
+    } else {
+        for (let i = 1; i <= N; i++) result = result + i
+    }
+    return result
 }
 
 
@@ -74,7 +112,16 @@ export function sumFirstNumbers(N: number): number {
 
 
 export function getBanknoteList(amountOfMoney: number): Array<number> {
-    //...здесь пишем код.
-    // В return стоит "заглушка", чтоб typescript не ругался
-    return [1]
+    const banknotes = [1000, 500, 100, 50, 20, 10, 5, 2, 1]
+    let finalArray = []
+    do {
+        for (let i = 0; i < banknotes.length; i++) {
+            if (amountOfMoney >= banknotes[i]) {
+                finalArray.push(banknotes[i])
+                amountOfMoney = amountOfMoney - banknotes[i]
+                i = -1
+            }
+        }
+    } while (amountOfMoney > 0)
+    return finalArray
 }
